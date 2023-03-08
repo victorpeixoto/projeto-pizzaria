@@ -1,7 +1,11 @@
-//! Listar as pizzas
+//! - Listar as pizzas
 
-//! FUNÇÕES E VARIÁVEIS GLOBAIS
+//! -  FUNÇÕES E VARIÁVEIS GLOBAIS
+
+let cart = [];
 let modalQt = 1;
+let modalKey = 0;
+
 const c = (el) => document.querySelector(el);
 const cs = (el) => document.querySelectorAll(el);
 
@@ -24,6 +28,7 @@ pizzaJson.map((item, index) => {
 
     let key = e.target.closest('.pizza-item').getAttribute('data-key');
     modalQt = 1;
+    modalKey = key;
 
     c('.pizzaBig img').src = pizzaJson[key].img
     c('.pizzaInfo h1').innerHTML = pizzaJson[key].name;
@@ -65,14 +70,86 @@ pizzaJson.map((item, index) => {
 
 })
 
-//! EVENTOS DO MODAL
+//! - EVENTOS DO MODAL
 
 function closeModal(){
   c('.pizzaWindowArea').style.opacity = 0;
   setTimeout(() => {
     c('.pizzaWindowArea').style.display = 'none';
   }, 500);
-}
+};
+
 cs('.pizzaInfo--cancelButton, .pizzaInfo--cancelMobileButton').forEach((item) => {
   item.addEventListener('click', closeModal);
+});
+
+
+
+c('.pizzaInfo--qtmenos').addEventListener('click', () => {
+  if(modalQt > 1){
+    modalQt--;
+  
+    c('.pizzaInfo--actualPrice').innerHTML = (pizzaJson[modalKey].price * modalQt).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    });
+
+    c('.pizzaInfo--qt').innerHTML = modalQt;
+  }
+});
+
+c('.pizzaInfo--qtmais').addEventListener('click', () => {
+  modalQt++;
+
+  c('.pizzaInfo--actualPrice').innerHTML = (pizzaJson[modalKey].price * modalQt).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+
+  c('.pizzaInfo--qt').innerHTML = modalQt;
+});
+
+cs('.pizzaInfo--size').forEach((size) => {
+  size.addEventListener('click', () => {
+    c('.pizzaInfo--size.selected').classList.remove('selected');
+    size.classList.add('selected');
+  })
+});
+
+//! - CARRINHO
+
+c('.pizzaInfo--addButton').addEventListener('click', () => {
+ 
+  let size = parseInt(c('.pizzaInfo--size.selected').getAttribute('data-key'));
+  let identifier = pizzaJson[modalKey].id + '@' + size;
+  let verification = cart.findIndex((item) => item.identifier == identifier);
+  if(verification > -1){
+    cart[verification].qt += modalQt;
+  } else{
+    cart.push({
+      identifier,
+      id: pizzaJson[modalKey].id,
+      size,
+      qt: modalQt
+    });
+  }
+  updateCart();
+  closeModal();
 })
+
+function updateCart(){
+  if(cart.length > 0){
+    c('aside').classList.add('show');
+    for(let i in cart){
+      let pizzaItem = pizzaJson.find((item) => item.id == cart[i].id);
+      let cartItem = c('.models .cart--item').cloneNode(true);
+      
+    }
+
+
+  } else {
+    c('aside').classList.remove('show');
+  }
+
+
+}
