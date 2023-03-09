@@ -85,7 +85,6 @@ cs('.pizzaInfo--cancelButton, .pizzaInfo--cancelMobileButton').forEach((item) =>
 });
 
 
-
 c('.pizzaInfo--qtmenos').addEventListener('click', () => {
   if(modalQt > 1){
     modalQt--;
@@ -148,7 +147,7 @@ function updateCart(){
     let subtotal = 0;
     let desconto = 0;
     let total = 0;
-    
+
     for(let i in cart){
       let pizzaItem = pizzaJson.find((item) => item.id == cart[i].id);
       subtotal += pizzaItem.price * cart[i].qt;
