@@ -1,5 +1,5 @@
-<div align="center" id="top"> 
-  <!-- <a href="https://projetopizzaria.netlify.app">Demo</a> -->
+<div align="center" style="margin-bottom: 20px" id="top"> 
+  <a href="https://victorpeixoto.github.io/projeto-pizzaria/">Versão do Projeto</a>
 </div>
 
 <h1 align="center">Projeto Pizzaria</h1>
