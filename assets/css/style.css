@@ -332,6 +332,13 @@ h1 {
     background-color:#35af4a;
 }
 
+footer{
+    padding: 20px 0px;
+    text-align: center;
+    background-color: #388bc5;
+    color: #FFF;
+}
+
 @media (max-width:1000px) {
     .pizza-area {
         grid-template-columns: repeat(2, 1fr);
